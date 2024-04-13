@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+# Product Requirements Documentation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+| Field | Detail |
+| ----- | ------ |
+| Project Name |  Content Management System |
+| Description |  CMS to publish articles and read artiles and blogs  |
+| Developer |   Izzy Zinxhirija   |
+| Live Website | TBD  |
+| Repo |  https://github.com/Izzy-2023/seir-seal-capstone-frontend |
 
-## Available Scripts
+## Problem being solved and Target Market
 
-In the project directory, you can run:
+This CMS app is a modern content management system designed to address the common challenges faced by individual content creators and small businesses. This tool will provide users the ability to create and manage content using a user friendly interface. 
 
-### `npm start`
+## User Stories
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+List of stories users should experience when using your application.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Users should be able to view the site on desktop and mobile
+- An administrator can add new users, so that I can grant access to new team members to manage content.
+- A content editor can create, edit, and publish articles, so that I can manage the content efficiently.
+- A content editor can insert images and videos into my articles, so that I can make the content more engaging.
+- A content editor can tag and categorize articles, so that they are easy to organize and find by our readers.
+- A content user can search for articles using keywords, so that I can quickly find specific content.
+- As a user, I want the website to be accessible on mobile devices, so that I can view content on the go.
+- As a user, I want to leave feedback on articles, so that I can interact with the content.
 
-### `npm test`
+## Component Architecture
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```mermaid
+flowchart LR
+  App-->Header
+  App-->Main
+  App-->Footer
+  Main-->Router
+  Router-->Home
+  Router-->Login
+  Router-->Dashboard
+```
 
-### `npm run build`
+## User Interface Mockups
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Main Page
+![Main_Page](https://i.imgur.com/dEH9o0J.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Articles Page
+![Articles_Page](https://i.imgur.com/xRNtOLL.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Login Page
+![Login_Page](https://i.imgur.com/nFIVKVr.png)
