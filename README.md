@@ -48,5 +48,8 @@ flowchart LR
 
 ### Login Page
 ![Login_Page](https://i.imgur.com/nFIVKVr.png)
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> eba50c75bd2d16ece27afb7b2ac4dc671491bae4
