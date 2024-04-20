@@ -1,54 +1,27 @@
+// src/App.js
+
 import React from 'react';
-import { useQuery, useMutation, gql } from '@apollo/client';
-
-const GET_ARTICLES = gql`
-  {
-    articles {
-      id
-      title
-      body
-      publishedDate
-    }
-  }
-`;
-
-const CREATE_ARTICLE = gql`
-  mutation CreateArticle($title: String!, $body: String!) {
-    createArticle(title: $title, body: $body) {
-      article {
-        id
-        title
-      }
-    }
-  }
-`;
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Dashboard from './components/Dashboard';
+import PostForm from './components/PostForm';
+import Articles from './components/Articles';
+import { ApolloProvider } from '@apollo/client';
+import { client } from './components/apolloClient'; // Assuming you export the Apollo client instance from a separate file
 
 function App() {
-  const { loading, error, data } = useQuery(GET_ARTICLES);
-  const [createArticle] = useMutation(CREATE_ARTICLE);
-
-  const handleCreateArticle = () => {
-    const title = prompt("Enter article title:");
-    const body = prompt("Enter article content:");
-    if (title && body) {
-      createArticle({ variables: { title, body } });
-    }
-  };
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
   return (
-    <div>
-      <h1>Articles</h1>
-      {data.articles.map(({ id, title, body }) => (
-        <div key={id}>
-          <h2>{title}</h2>
-          <p>{body}</p>
-        </div>
-      ))}
-      <button onClick={handleCreateArticle}>Add Article</button>
-    </div>
+    <ApolloProvider client={client}>
+      <Router>
+        <Dashboard>
+          <Routes>
+            <Route path="/" element={<Articles />} />
+            <Route path="/edit/:id" element={<PostForm />} />
+            <Route path="/add-post" element={<PostForm />} />
+            {/* ... other routes */}
+          </Routes>
+        </Dashboard>
+      </Router>
+    </ApolloProvider>
   );
 }
 
