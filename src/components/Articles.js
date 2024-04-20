@@ -1,10 +1,11 @@
 // src/components/Articles.js
-// src/components/Articles.js
+
 import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { Button, Typography, Box } from '@mui/material';
 import DOMPurify from 'dompurify';
+import { format } from 'date-fns'; // Import the format function from date-fns
 import { GET_ARTICLES } from '../graphql/queries';
 import { DELETE_ARTICLE } from '../graphql/mutations';
 
@@ -33,16 +34,23 @@ function Articles() {
     if (error) return <Typography>Error loading articles: {error.message}</Typography>;
 
     return (
-        <div>
-            <Typography variant="h4">Articles</Typography>
+        <Box>
+            <Typography variant="h4" mb={4}>Articles</Typography>
             {data && data.articles.map((article) => (
-                <Box key={article.id} mb={2}>
+                <Box key={article.id} mb={4}>
                     <Typography variant="h5">{article.title}</Typography>
                     <div
                         dangerouslySetInnerHTML={{
                             __html: DOMPurify.sanitize(article.body),
                         }}
                     />
+                    {/* Displaying the published and updated dates */}
+                    <Typography color="textSecondary" mt={1}>
+                        Published on: {article.publishedDate ? format(new Date(article.publishedDate), 'PPP, p') : 'Unknown'}
+                    </Typography>
+                    <Typography color="textSecondary" mb={1}>
+                        Last updated: {article.updatedDate ? format(new Date(article.updatedDate), 'PPP, p') : 'Unknown'}
+                    </Typography>
                     <Button
                         component={Link}
                         to={`/edit/${article.id}`}
@@ -61,7 +69,7 @@ function Articles() {
                     </Button>
                 </Box>
             ))}
-        </div>
+        </Box>
     );
 }
 

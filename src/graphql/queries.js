@@ -9,6 +9,7 @@ export const GET_ARTICLES = gql`
     title
     body
     publishedDate
+    updatedDate
   }
 }
 `;
