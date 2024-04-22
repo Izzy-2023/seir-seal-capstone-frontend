@@ -21,6 +21,7 @@ export const UPDATE_ARTICLE = gql`
         title
         body
         publishedDate
+        updatedDate
       }
     }
   }
@@ -33,4 +34,3 @@ export const DELETE_ARTICLE = gql`
     }
   }
 `;
-

@@ -21,6 +21,7 @@ export const GET_ARTICLE = gql`
       title
       body
       publishedDate
+      updatedDate
     }
   }
 `;
