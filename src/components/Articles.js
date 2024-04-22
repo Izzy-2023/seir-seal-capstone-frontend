@@ -34,12 +34,29 @@ function Articles() {
     if (error) return <Typography>Error loading articles: {error.message}</Typography>;
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
-            <Typography variant="h4" mb={4}>Articles</Typography>
+        <Box sx={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center', 
+            gap: 2, 
+            backgroundColor: '#ecf542', // Background color for the page
+            padding: '20px' // Add padding for better spacing
+        }}>
+            <Typography variant="h4" mb={4} color="primary">Articles</Typography>
             {data && data.articles.map((article) => (
-                <Card key={article.id} sx={{ width: '100%', maxWidth: 600, mb: 2 }}>
+                <Card 
+                    key={article.id} 
+                    sx={{ 
+                        width: '100%', 
+                        maxWidth: 600, 
+                        mb: 2,
+                        backgroundColor: '#42f5c5', // Background color for the card
+                        boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1)', // Add shadow for depth
+                    }} 
+                    variant="outlined"
+                >
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
+                        <Typography gutterBottom variant="h5" component="div" color="primary">
                             {article.title}
                         </Typography>
                         <div
@@ -79,4 +96,3 @@ function Articles() {
 }
 
 export default Articles;
-
