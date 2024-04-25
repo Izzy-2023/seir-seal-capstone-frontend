@@ -24,7 +24,7 @@ const Dashboard = ({ children }) => {
             aria-label="open drawer"
             onClick={handleMenuToggle}
             edge="start"
-            sx={{ mr: 2 }}
+            sx={{ mr: 2, display: { sm: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
@@ -33,21 +33,46 @@ const Dashboard = ({ children }) => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" sx={{ width: drawerWidth, [`& .MuiDrawer-paper`]: { width: drawerWidth } }}>
+      <Drawer
+        variant="temporary"
+        open={menuOpen}
+        onClose={handleMenuToggle}
+        sx={{
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          display: { xs: 'block', sm: 'none' }
+        }}
+      >
         <Toolbar />
-        {menuOpen && (
-          <List>
-            <ListItem button component={Link} to="/">
-              <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary="Articles" />
-            </ListItem>
-            <ListItem button component={Link} to="/add-post">
-              <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary="Add Post" />
-            </ListItem>
-            {/* ... other navigation items */}
-          </List>
-        )}
+        <List>
+          <ListItem button component={Link} to="/">
+            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemText primary="Articles" />
+          </ListItem>
+          <ListItem button component={Link} to="/add-post">
+            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemText primary="Add Post" />
+          </ListItem>
+          {/* ... other navigation items */}
+        </List>
+      </Drawer>
+      <Drawer
+        variant="permanent"
+        sx={{
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, display: { xs: 'none', sm: 'block' } }
+        }}
+      >
+        <Toolbar />
+        <List>
+          <ListItem button component={Link} to="/">
+            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemText primary="Articles" />
+          </ListItem>
+          <ListItem button component={Link} to="/add-post">
+            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemText primary="Add Post" />
+          </ListItem>
+          {/* ... other navigation items */}
+        </List>
       </Drawer>
       <main style={{ flexGrow: 1, p: 3, width: `calc(100% - ${drawerWidth}px)` }}>
         <Toolbar />
@@ -58,4 +83,5 @@ const Dashboard = ({ children }) => {
 };
 
 export default Dashboard;
+
 
