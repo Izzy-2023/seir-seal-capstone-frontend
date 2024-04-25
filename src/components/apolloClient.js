@@ -3,6 +3,6 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 export const client = new ApolloClient({
-  uri: 'http://localhost:8000/graphql/',
+  uri: 'https://cms-backend-toox.onrender.com/graphql/',
   cache: new InMemoryCache()
 });
