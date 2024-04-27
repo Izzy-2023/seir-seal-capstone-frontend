@@ -1,22 +1,23 @@
 // src/components/PostForm.js
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import { Formik, Form, Field } from 'formik';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Button, Box, TextField, Typography } from '@mui/material';
-import { GET_ARTICLE, GET_ARTICLES } from '../graphql/queries';  // Ensure correct import paths
-import { UPDATE_ARTICLE, CREATE_ARTICLE } from '../graphql/mutations';  // Ensure correct import paths
+import { GET_ARTICLE, GET_ARTICLES } from '../graphql/queries';
+import { UPDATE_ARTICLE, CREATE_ARTICLE } from '../graphql/mutations';
+import Dropzone from 'react-dropzone'; // Import Dropzone
 
 const PostForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const parsedId = parseInt(id, 10); // Ensure `id` is parsed as an integer
+  const parsedId = parseInt(id, 10);
   const isEditing = Boolean(id);
+  const [files, setFiles] = useState([]); // State to store uploaded files
 
-  // Fetch the article if editing. Use `skip` to avoid running the query if not editing.
   const { data, loading, error } = useQuery(GET_ARTICLE, {
     variables: { id: parsedId },
     skip: !isEditing,
@@ -24,10 +25,10 @@ const PostForm = () => {
 
   const [saveArticle, { loading: saveLoading }] = useMutation(
     isEditing ? UPDATE_ARTICLE : CREATE_ARTICLE, {
-      variables: { id: parsedId }, // Use parsedId here as well for consistency
+      variables: { id: parsedId },
       refetchQueries: [{ query: GET_ARTICLES }],
       onCompleted: () => {
-        navigate('/');  // Redirect to articles list after successful update/create
+        navigate('/');
       },
       onError: (error) => {
         alert(`An error occurred: ${error.message}`);
@@ -50,7 +51,15 @@ const PostForm = () => {
       initialValues={initialValues}
       enableReinitialize
       onSubmit={(values, { setSubmitting }) => {
-        saveArticle({ variables: { id: parsedId, ...values } }) // Ensure parsedId is used
+        // Combine form values with uploaded files
+        const formData = new FormData();
+        formData.append('title', values.title);
+        formData.append('body', values.body);
+        files.forEach(file => {
+          formData.append('files', file);
+        });
+
+        saveArticle({ variables: { id: parsedId, ...values } })
           .catch(err => {
             console.error('Error saving the article:', err);
             setSubmitting(false);
@@ -69,6 +78,17 @@ const PostForm = () => {
               onChange={(content) => setFieldValue('body', content)} 
             />
           </Box>
+          {/* Dropzone component */}
+          <Dropzone onDrop={acceptedFiles => setFiles(acceptedFiles)}>
+            {({getRootProps, getInputProps}) => (
+              <section>
+                <div {...getRootProps()} style={{ border: '1px dashed #ccc', padding: '20px', marginBottom: '20px' }}>
+                  <input {...getInputProps()} />
+                  <p>Drag 'n' drop some files here, or click to select files</p>
+                </div>
+              </section>
+            )}
+          </Dropzone>
           <Box textAlign="right">
             <Button 
               type="submit" 
