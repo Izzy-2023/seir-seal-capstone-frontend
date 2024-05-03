@@ -1,4 +1,5 @@
 // src/components/Articles.js
+// src/components/Articles.js
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
@@ -74,7 +75,7 @@ function Articles() {
                     size="small"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    sx={{ flex: 1 }}
+                    sx={{ flex: 1, backgroundColor: 'white' }} // Updated to white background color
                 />
                 <FormControl variant="outlined" size="small" sx={{ minWidth: 120 }}>
                     <InputLabel>Year</InputLabel>
@@ -82,6 +83,7 @@ function Articles() {
                         value={filterYear}
                         onChange={(e) => setFilterYear(e.target.value)}
                         label="Year"
+                        sx={{ backgroundColor: 'white' }} // Updated to white background color
                     >
                         <MenuItem value="">All</MenuItem>
                         {data.articles.map(article => new Date(article.publishedDate).getFullYear()).filter((value, index, self) => self.indexOf(value) === index).map(year => (
@@ -95,6 +97,7 @@ function Articles() {
                         value={filterMonth}
                         onChange={(e) => setFilterMonth(e.target.value)}
                         label="Month"
+                        sx={{ backgroundColor: 'white' }} // Updated to white background color
                     >
                         <MenuItem value="">All</MenuItem>
                         {data.articles.map(article => new Date(article.publishedDate).getMonth() + 1).filter((value, index, self) => self.indexOf(value) === index).map(month => (
@@ -108,6 +111,7 @@ function Articles() {
                         value={filterDay}
                         onChange={(e) => setFilterDay(e.target.value)}
                         label="Day"
+                        sx={{ backgroundColor: 'white' }} // Updated to white background color
                     >
                         <MenuItem value="">All</MenuItem>
                         {data.articles.map(article => new Date(article.publishedDate).getDate()).filter((value, index, self) => self.indexOf(value) === index).map(day => (
@@ -154,4 +158,3 @@ function Articles() {
 }
 
 export default Articles;
-
