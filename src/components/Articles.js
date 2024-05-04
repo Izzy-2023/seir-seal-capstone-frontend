@@ -1,5 +1,4 @@
 // src/components/Articles.js
-// src/components/Articles.js
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
@@ -10,8 +9,14 @@ import { GET_ARTICLES } from '../graphql/queries';
 import { DELETE_ARTICLE } from '../graphql/mutations';
 
 function Articles() {
-    const { data, loading, error } = useQuery(GET_ARTICLES);
-    const [deleteArticle] = useMutation(DELETE_ARTICLE);
+    const { data, loading, error, refetch } = useQuery(GET_ARTICLES);
+    const [deleteArticle] = useMutation(DELETE_ARTICLE, {
+        onCompleted: () => refetch(),
+        onError: (error) => {
+            console.error("Error during deletion:", error.message);
+            alert(`Failed to delete the article: ${error.message}`);
+        },
+    });
     const [searchQuery, setSearchQuery] = useState('');
     const [filterYear, setFilterYear] = useState('');
     const [filterMonth, setFilterMonth] = useState('');
@@ -28,18 +33,16 @@ function Articles() {
         }
     };
 
-    const handleFilter = () => {
-        return data.articles.filter(article => {
-            const titleMatch = article.title.toLowerCase().includes(searchQuery.toLowerCase());
-            const yearMatch = filterYear === '' || new Date(article.publishedDate).getFullYear().toString() === filterYear.toString();
-            const monthMatch = filterMonth === '' || (new Date(article.publishedDate).getMonth() + 1).toString() === filterMonth.toString();
-            const dayMatch = filterDay === '' || new Date(article.publishedDate).getDate().toString() === filterDay.toString();
-            return titleMatch && yearMatch && monthMatch && dayMatch;
-        });
-    };
-
     if (loading) return <Typography>Loading articles...</Typography>;
     if (error) return <Typography>Error loading articles: {error.message}</Typography>;
+
+    const filteredArticles = data.articles.filter(article => {
+        const titleMatch = article.title.toLowerCase().includes(searchQuery.toLowerCase());
+        const yearMatch = filterYear === '' || new Date(article.publishedDate).getFullYear().toString() === filterYear.toString();
+        const monthMatch = filterMonth === '' || (new Date(article.publishedDate).getMonth() + 1).toString() === filterMonth.toString();
+        const dayMatch = filterDay === '' || new Date(article.publishedDate).getDate().toString() === filterDay.toString();
+        return titleMatch && yearMatch && monthMatch && dayMatch;
+    });
 
     return (
         <Box
@@ -121,7 +124,7 @@ function Articles() {
                 </FormControl>
             </Box>
             <Box sx={{ width: '100%', maxWidth: 800 }}>
-                {handleFilter().map((article) => (
+                {filteredArticles.map((article) => (
                     <Card
                         key={article.id}
                         sx={{

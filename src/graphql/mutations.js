@@ -1,6 +1,7 @@
 // src/graphql/mutations.js
 
 import { gql } from '@apollo/client';
+import { GET_ARTICLES } from './queries';
 
 export const CREATE_ARTICLE = gql`
   mutation CreateArticle($title: String!, $body: String!) {
@@ -34,3 +35,5 @@ export const DELETE_ARTICLE = gql`
     }
   }
 `;
+
+
